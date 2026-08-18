@@ -81,3 +81,184 @@
     });
   }
 })();
+/* ============ Live haircut counter ============ */
+/* The number stands at its real total and ticks one up every few seconds, the
+   way a shop tally would: the units wheel turns over, and the wheels above it
+   only move when it passes nine. Nothing animates on arrival — the figure is
+   already correct when the section comes into view. */
+(function () {
+  "use strict";
+
+  var el = document.querySelector(".odometer");
+  if (!el) return;
+
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion || !("IntersectionObserver" in window)) return;
+
+  var TICK_MS = parseInt(el.getAttribute("data-tick"), 10) || 1500;   /* one haircut */
+  var ROLL_MS = 620;                                                  /* the flip itself */
+  var EASE = "cubic-bezier(0.45, 0.05, 0.25, 1.06)";                  /* settles with a nudge */
+
+  var template = el.textContent;                 /* "23 985" — separators kept as typed */
+  var digits = template.replace(/\D/g, "");
+  var value = parseInt(digits, 10);
+  if (!digits.length || !isFinite(value)) return;
+
+  var limit = Math.pow(10, digits.length) - 1;   /* no room to grow a new column */
+
+  /* Builds one reel per digit. Each reel runs 0–9 and then 0, 1 again: the
+     first repeat lets nine roll on to zero without a seam, the second gives the
+     easing something to show when it overshoots before settling. */
+  function build() {
+    var frag = document.createDocumentFragment();
+    var columns = [];
+
+    for (var i = 0; i < template.length; i++) {
+      var ch = template.charAt(i);
+
+      if (!/\d/.test(ch)) {
+        var gap = document.createElement("span");
+        gap.className = "odometer__gap";
+        gap.textContent = ch;
+        frag.appendChild(gap);
+        continue;
+      }
+
+      var cell = document.createElement("span");
+      cell.className = "odometer__digit";
+
+      var ghost = document.createElement("span");
+      ghost.className = "odometer__ghost";
+      ghost.textContent = ch;
+      cell.appendChild(ghost);
+
+      var mask = document.createElement("span");
+      mask.className = "odometer__mask";
+
+      var reel = document.createElement("span");
+      reel.className = "odometer__reel";
+      for (var k = 0; k <= 11; k++) {
+        var face = document.createElement("span");
+        face.textContent = String(k % 10);
+        reel.appendChild(face);
+      }
+
+      mask.appendChild(reel);
+      cell.appendChild(mask);
+      frag.appendChild(cell);
+
+      var digit = Number(ch);
+      reel.style.transform = "translateY(" + (-digit * 100) + "%)";
+      columns.push({ node: reel, digit: digit });
+    }
+
+    var sr = document.createElement("span");
+    sr.className = "odometer__sr";
+    sr.textContent = template;
+
+    var reels = document.createElement("span");
+    reels.className = "odometer__reels";
+    reels.setAttribute("aria-hidden", "true");
+    reels.appendChild(frag);
+
+    el.textContent = "";
+    el.appendChild(sr);
+    el.appendChild(reels);
+
+    return { columns: columns, sr: sr };
+  }
+
+  var counter = build();
+
+  function format(n) {
+    var padded = String(n);
+    while (padded.length < digits.length) padded = "0" + padded;
+    var out = "";
+    var d = 0;
+    for (var i = 0; i < template.length; i++) {
+      var ch = template.charAt(i);
+      out += /\d/.test(ch) ? padded.charAt(d++) : ch;
+    }
+    return out;
+  }
+
+  /* One tick: every wheel that changes moves up exactly one face, all of them
+     together, so a carry (…989 → …990) turns as a single movement. */
+  function tick() {
+    var next = value + 1;
+    var before = format(value).replace(/\D/g, "");
+    var after = format(next).replace(/\D/g, "");
+    var rolling = [];
+
+    counter.columns.forEach(function (column, i) {
+      if (before.charAt(i) === after.charAt(i)) return;
+      column.node.style.transition = "transform " + ROLL_MS + "ms " + EASE;
+      column.node.style.transform = "translateY(" + (-(column.digit + 1) * 100) + "%)";
+      rolling.push(column);
+    });
+
+    value = next;
+    counter.sr.textContent = format(value);
+
+    /* Once a wheel has rolled past nine it is sitting on the repeated face;
+       drop it back to the real one with the transition off, so the next tick
+       starts from a sane position. */
+    window.setTimeout(function () {
+      rolling.forEach(function (column) {
+        column.digit = (column.digit + 1) % 10;
+        if (column.digit !== 0) return;
+        column.node.style.transition = "none";
+        column.node.style.transform = "translateY(0%)";
+        column.node.getBoundingClientRect();      /* flush, or the reset animates */
+      });
+    }, ROLL_MS + 40);
+  }
+
+  /* Runs only while the number is on screen and the tab is in front: nobody
+     should come back to a tally that ran off on its own. */
+  var timer = null;
+  var onScreen = false;
+
+  function sync() {
+    var shouldRun = onScreen && !document.hidden && value < limit;
+    if (shouldRun && !timer) {
+      timer = window.setInterval(tick, TICK_MS);
+    } else if (!shouldRun && timer) {
+      window.clearInterval(timer);
+      timer = null;
+    }
+  }
+
+  new IntersectionObserver(function (entries) {
+    onScreen = entries[0].isIntersecting;
+    sync();
+  }, { threshold: 0.6 }).observe(el);
+
+  document.addEventListener("visibilitychange", sync);
+})();
+
+/* ============ Scroll progress hairline ============ */
+(function () {
+  "use strict";
+
+  var bar = document.getElementById("scroll-progress-bar");
+  if (!bar) return;
+
+  var ticking = false;
+
+  function update() {
+    var scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    var progress = scrollable > 0 ? Math.min(1, window.scrollY / scrollable) : 0;
+    bar.style.transform = "scaleX(" + progress + ")";
+    ticking = false;
+  }
+
+  window.addEventListener("scroll", function () {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(update);
+  }, { passive: true });
+
+  window.addEventListener("resize", update);
+  update();
+})();
