@@ -8,8 +8,8 @@
   var navToggle = document.getElementById("nav-toggle");
   var mobileNav = document.getElementById("mobile-nav");
 
-  /* The lock goes on <html>, not <body>: overflow:hidden on body makes body its
-     own scroll container and breaks position:sticky on the header. */
+  /* The lock goes on <html> only: overflow:hidden on body makes body its own
+     scroll container and breaks position:sticky on the header. */
   function setNavOpen(open) {
     navToggle.setAttribute("aria-expanded", String(open));
     mobileNav.classList.toggle("is-open", open);
