@@ -1,0 +1,65 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish; queue at most one more behind it.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # Runs before the build so base_url is available to the patch step below.
+      - id: pages
+        uses: actions/configure-pages@v5
+
+      - run: npm ci
+      - run: npm run build
+
+      # Vite rewrites og:image to a relative URL, but link-preview crawlers
+      # (Telegram, WhatsApp, Slack) need absolute ones, and og:url still points
+      # at the production domain. Both are corrected to the live Pages URL, and
+      # the preview is marked noindex so it never competes with craftspb.ru.
+      - name: Point preview metadata at the Pages URL
+        env:
+          BASE: ${{ steps.pages.outputs.base_url }}
+        run: |
+          BASE="${BASE%/}"
+          sed -i \
+            -e "s|<meta property=\"og:url\" content=\"[^\"]*\">|<meta property=\"og:url\" content=\"$BASE/\">|" \
+            -e "s|content=\"\./assets/images/og-image\.jpg\"|content=\"$BASE/assets/images/og-image.jpg\"|g" \
+            -e "s|<head>|<head>\n<meta name=\"robots\" content=\"noindex\">|" \
+            dist/index.html
+          echo "--- preview metadata ---"
+          grep -E 'og:url|og:image"|twitter:image|robots' dist/index.html
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

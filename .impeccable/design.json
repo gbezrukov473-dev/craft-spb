@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-18T00:00:00Z",
+  "title": "Design System: CRAFT",
+  "extensions": {
+    "colorMeta": {
+      "ink": { "role": "neutral", "displayName": "Near-Black Burgundy", "canonical": "#1C1114", "tonalRamp": ["#301d22", "#59363f", "#7f4d5b", "#9f6071", "#b68693", "#cdacb5", "#e2cfd4", "#f5eff1"] },
+      "ink-soft": { "role": "neutral", "displayName": "Ink Soft", "canonical": "#4A3A3D" },
+      "ink-faint": { "role": "neutral", "displayName": "Ink Faint", "canonical": "#7C6B6D" },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#F3EEE6", "tonalRamp": ["#342919", "#604d2e", "#8a6e42", "#ac8a53", "#c0a67c", "#d4c2a5", "#e6dccb", "#f7f3ee"] },
+      "paper-dim": { "role": "neutral", "displayName": "Paper Dim", "canonical": "#EAE2D3" },
+      "paper-deep": { "role": "neutral", "displayName": "Paper Deep", "canonical": "#E0D5C3" },
+      "accent": { "role": "primary", "displayName": "Overworked Green", "canonical": "#3C5A48", "tonalRamp": ["#1f2e25", "#395645", "#527a62", "#66997a", "#8bb19a", "#afcaba", "#d1e0d7", "#f0f5f2"] },
+      "accent-dark": { "role": "primary", "displayName": "Overworked Green, Deep", "canonical": "#2C4436" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headline only. Bleeds to the frame's edge; never used elsewhere at this scale." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles. Never preceded by a kicker label." },
+      "body": { "displayName": "Body", "purpose": "Running copy, 62ch measure cap." },
+      "label": { "displayName": "Label", "purpose": "Buttons, nav links, micro-labels. Uppercase, 0.02em tracking." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "The system's one easing curve — entrance reveals, hover transitions, nav panel." }
+    ],
+    "breakpoints": [
+      { "name": "tablet", "value": "640px" },
+      { "name": "desktop", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Filled accent CTA — booking action throughout the page.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Записаться онлайн</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; background: #3C5A48; color: #F3EEE6; font-weight: 700; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.02em; padding: 0.95em 1.7em; border: 1px solid transparent; border-radius: 0; transition: background-color 0.2s cubic-bezier(0.16,1,0.3,1), transform 0.2s cubic-bezier(0.16,1,0.3,1); } .ds-btn-primary:hover, .ds-btn-primary:focus-visible { background: #2C4436; } .ds-btn-primary:active { transform: scale(0.98); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action — map links, ghost CTAs.",
+      "html": "<a class=\"ds-btn-outline\" href=\"#\">Открыть в Яндекс.Картах</a>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; justify-content: center; background: transparent; color: #1C1114; font-weight: 700; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.02em; padding: 0.95em 1.7em; border: 1px solid rgba(28,17,20,0.32); border-radius: 0; transition: all 0.2s cubic-bezier(0.16,1,0.3,1); } .ds-btn-outline:hover, .ds-btn-outline:focus-visible { border-color: #1C1114; background: #1C1114; color: #F3EEE6; }"
+    },
+    {
+      "name": "Price List Row",
+      "kind": "custom",
+      "refersTo": "price-list-row",
+      "description": "Ledger-style row with a dotted leader rule — the system's alternative to a card.",
+      "html": "<div class=\"ds-price-row\"><span class=\"ds-price-name\">Мужская стрижка</span><span class=\"ds-price-rule\"></span><span class=\"ds-price-value\">1700 ₽</span></div>",
+      "css": ".ds-price-row { display: flex; align-items: baseline; gap: 0.875rem; padding: 1.5rem 0; border-bottom: 1px solid rgba(28,17,20,0.16); font-family: 'Golos Text', sans-serif; } .ds-price-name { font-size: 1.1rem; font-weight: 600; } .ds-price-rule { flex: 1; border-bottom: 2px dotted rgba(28,17,20,0.32); transform: translateY(-0.35em); } .ds-price-value { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 1.1rem; white-space: nowrap; }"
+    },
+    {
+      "name": "Stamped Stub",
+      "kind": "custom",
+      "refersTo": "stub",
+      "description": "Signature component: opening hours rendered as a punched ticket rather than a plain value. Used exactly twice in the system (proof strip, contacts) — do not generalize to other content.",
+      "html": "<span class=\"ds-stub\">10:00–21:00</span>",
+      "css": ".ds-stub { display: inline-block; border: 1px dashed currentColor; padding: 0.15em 0.55em; transform: rotate(-1.6deg); font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Desktop header nav item — underline grows in from the left on hover/focus.",
+      "html": "<a class=\"ds-nav-link\" href=\"#\">Услуги</a>",
+      "css": ".ds-nav-link { position: relative; font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; padding-bottom: 2px; color: #1C1114; } .ds-nav-link::after { content: ''; position: absolute; left: 0; right: 100%; bottom: -3px; height: 2px; background: #3C5A48; transition: right 0.25s cubic-bezier(0.16,1,0.3,1); } .ds-nav-link:hover::after, .ds-nav-link:focus-visible::after { right: 0; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Documentary Lookbook",
+    "overview": "CRAFT is proven through real work, not styled around it. The system borrows the grammar of a contemporary Russian menswear lookbook — the documentary-editorial register Saint Petersburg's own fashion export made internationally recognizable — rather than the salon-spa or barber-pole vocabulary the category defaults to. Raw, unglamorized photography; oversized cropped type; a disciplined, slightly off-kilter grid; a palette that stays almost achromatic so the one accent color reads as a decision, not a theme.\n\nThe system was chosen through Impeccable's direction-seed process and confirmed by the client over a dice-assigned alternative and two catalog challengers. Its explicit anti-references are the generic black-and-gold luxury barbershop template, barber-pole and scissors iconography, glassmorphism, decorative gradients, and same-size icon-card grids.\n\nDensity is low and confident: long stretches of quiet paper-toned space between a small number of fully committed moments. Nothing is decorated for its own sake — no shadows, no rounded corners, no gradients, no glass.",
+    "keyCharacteristics": [
+      "Flat ink-on-paper throughout — zero border-radius, zero box-shadow, by invariant.",
+      "One accent color, used sparingly and always at full saturation.",
+      "Every headline, list, and stat aligns to the same shared content margin — no element sits closer to the frame edge than another.",
+      "Lists over cards: services, reviews, and hours are typographic rows with hairline rules.",
+      "Real client photography (hero, team) is duotone-graded; the gallery still awaits real shop photography."
+    ],
+    "rules": [
+      { "name": "The One-Ink Rule", "body": "Exactly one saturated color exists in this system. If a second accent is ever needed, desaturate it until it reads as a neutral, or don't ship it.", "section": "colors" },
+      { "name": "The No-Kicker Rule", "body": "No section heading is ever preceded by a small tracked label above it.", "section": "typography" },
+      { "name": "The Flat-Ink Rule", "body": "If a component seems to need a shadow to separate from its background, change the ground color or add a hairline rule instead.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep the accent color confined to interactive/active moments — CTA, hover, the stub, hairline accents on focus.",
+      "Do set lists (services, reviews, hours) as typographic rows with hairline dividers before reaching for a card.",
+      "Do keep every headline, list, and stat aligned to the shared content margin.",
+      "Do duotone-grade any real photography added to the system; the gallery's six slots still await real shop photography."
+    ],
+    "donts": [
+      "Don't introduce a second saturated color.",
+      "Don't add border-radius, box-shadow, gradients, or backdrop blur as decoration.",
+      "Don't put a kicker/eyebrow label above a section heading, ever.",
+      "Don't reuse the stamped-stub treatment outside of opening-hours content."
+    ]
+  }
+}
