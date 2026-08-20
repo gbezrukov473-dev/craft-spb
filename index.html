@@ -22,8 +22,9 @@
 <meta name="twitter:description" content="Мужские стрижки, борода, детские стрижки. Рейтинг 5.0 на Яндексе, 292 отзыва. Онлайн-запись.">
 <meta name="twitter:image" content="/assets/images/og-image.jpg">
 
-<link rel="icon" href="/assets/images/favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="/assets/images/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/images/favicon-512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon-180.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,7 +40,7 @@
   "name": "CRAFT",
   "image": "https://craftspb.ru/assets/images/og-image.jpg",
   "telephone": "+78129525715",
-  "priceRange": "300–2400 ₽",
+  "priceRange": "300–2700 ₽",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Лиговский проспект, 71А",
@@ -114,7 +115,9 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
 <header class="site-header" id="site-header">
   <div class="site-header__inner">
     <a class="wordmark" href="#top" aria-label="CRAFT — на главную">
-      <img class="wordmark__mark" src="/assets/images/logo.png" alt="" width="400" height="389">
+      <img class="wordmark__mark" src="/assets/images/logo-96.png"
+           srcset="/assets/images/logo-48.png 48w, /assets/images/logo-96.png 96w, /assets/images/logo-160.png 160w"
+           sizes="41px" alt="" width="400" height="389">
       <span class="wordmark__text">
         <span class="wordmark__main">CRAFT</span>
         <span class="wordmark__sub">мужские стрижки</span>
@@ -156,9 +159,11 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
   <!-- ============ HERO ============ -->
   <section class="hero" id="top" aria-label="Заставка">
     <div class="hero__media">
-      <img class="photo" src="/assets/images/hero-main.jpg"
-           alt="Барбер CRAFT за стрижкой"
-           width="1672" height="941" fetchpriority="high">
+      <picture class="picture">
+        <source type="image/avif" sizes="100vw" srcset="/assets/images/hero-main-960.avif 960w, /assets/images/hero-main-1440.avif 1440w, /assets/images/hero-main-1920.avif 1920w">
+        <source type="image/webp" sizes="100vw" srcset="/assets/images/hero-main-960.webp 960w, /assets/images/hero-main-1440.webp 1440w, /assets/images/hero-main-1920.webp 1920w">
+        <img class="photo" src="/assets/images/hero-main.jpg" alt="Барбер CRAFT за стрижкой" width="2400" height="1350" fetchpriority="high">
+      </picture>
     </div>
 
     <div class="hero__content">
@@ -215,10 +220,20 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
           <span class="price-list__rule" aria-hidden="true"></span>
           <span class="price-list__price">1700 ₽</span>
         </li>
+        <li class="price-list__row price-list__row--sub">
+          <span class="price-list__name">Длина от 5 см<span class="price-list__hint">стрижём ножницами</span></span>
+          <span class="price-list__rule" aria-hidden="true"></span>
+          <span class="price-list__price">2000 ₽</span>
+        </li>
         <li class="price-list__row price-list__row--primary">
           <span class="price-list__name">Стрижка + борода</span>
           <span class="price-list__rule" aria-hidden="true"></span>
           <span class="price-list__price">2400 ₽</span>
+        </li>
+        <li class="price-list__row price-list__row--sub">
+          <span class="price-list__name">Длина от 5 см<span class="price-list__hint">стрижём ножницами</span></span>
+          <span class="price-list__rule" aria-hidden="true"></span>
+          <span class="price-list__price">2700 ₽</span>
         </li>
         <li class="price-list__row">
           <span class="price-list__name">Оформление бороды</span>
@@ -264,9 +279,11 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
       <div class="why__heading reveal-fade">
         <h2 class="section-title" id="why-title">Почему CRAFT</h2>
         <div class="why__portrait photo-frame">
-          <img class="photo" src="/assets/images/why-portrait.jpg"
-               alt="Мастер CRAFT (временное фото — заменить на портрет барбера)"
-               width="1000" height="1250" loading="lazy">
+          <picture class="picture">
+            <source type="image/avif" sizes="(min-width: 400px) 352px, 100vw" srcset="/assets/images/why-portrait-400.avif 400w, /assets/images/why-portrait-720.avif 720w">
+            <source type="image/webp" sizes="(min-width: 400px) 352px, 100vw" srcset="/assets/images/why-portrait-400.webp 400w, /assets/images/why-portrait-720.webp 720w">
+            <img class="photo" src="/assets/images/why-portrait.jpg" alt="Барберы CRAFT у входа в барбершоп на Лиговском" width="1000" height="1250" loading="lazy">
+          </picture>
         </div>
       </div>
 
@@ -296,14 +313,14 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
     <div class="section-inner about__grid">
       <div class="about__body">
         <h2 class="section-title reveal-fade" id="about-title">О нас</h2>
-        <p class="about__lead reveal-fade">Команда CRAFT — <b>сложившийся коллектив барберов с опытом от 5 лет</b>. Мы следим за техникой и современными тенденциями, но начинаем с главного: внимательно слушаем, что нужно именно вам, и вместе выбираем форму, которая пойдёт.</p>
+        <p class="about__lead reveal-fade">Команда CRAFT — <b>сложившийся коллектив барберов с опытом от 7 лет</b>. Мы следим за техникой и современными тенденциями, но начинаем с главного: внимательно слушаем, что нужно именно вам, и вместе выбираем форму, которая пойдёт.</p>
         <dl class="about__stats reveal-fade">
           <div class="about__stat">
             <dt><span class="odometer" data-tick="1500">23 985</span></dt>
             <dd>стрижек</dd>
           </div>
           <div class="about__stat">
-            <dt>от 5 лет</dt>
+            <dt>от 7 лет</dt>
             <dd>опыт мастеров</dd>
           </div>
         </dl>
@@ -311,9 +328,11 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
 
       <figure class="about__portrait reveal-fade">
         <div class="photo-frame">
-          <img class="photo" src="/assets/images/team.jpg"
-               alt="Команда барберов CRAFT"
-               width="1080" height="1080" loading="lazy">
+          <picture class="picture">
+            <source type="image/avif" sizes="(min-width: 900px) 540px, 100vw" srcset="/assets/images/team-560.avif 560w, /assets/images/team-1080.avif 1080w">
+            <source type="image/webp" sizes="(min-width: 900px) 540px, 100vw" srcset="/assets/images/team-560.webp 560w, /assets/images/team-1080.webp 1080w">
+            <img class="photo" src="/assets/images/team.jpg" alt="Команда барберов CRAFT" width="1080" height="1080" loading="lazy">
+          </picture>
         </div>
         <figcaption class="about__caption">Команда CRAFT</figcaption>
       </figure>
@@ -326,24 +345,73 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
       <h2 class="section-title reveal-fade" id="gallery-title">Галерея</h2>
     </div>
 
+    <!-- Nine tiles on the six-column mosaic, ordered so every slot's aspect
+         matches its photo: portraits land on 2×2 cells (3:4), landscapes on the
+         4-column bands. Tiles 5–7 are the work triptych — one row, one rhythm,
+         so the results read as a set rather than as scattered detail shots. -->
     <div class="gallery__grid">
-      <div class="gallery__item gallery__item--tall photo-frame reveal-fade">
-        <img class="photo" src="/assets/images/gallery-1.jpg" alt="Интерьер зала CRAFT (временное фото — заменить на реальную съёмку)" width="1200" height="1500" loading="lazy">
+      <div class="gallery__item photo-frame reveal-fade">
+        <picture class="picture">
+          <source type="image/avif" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/gallery-interior-400.avif 400w, /assets/images/gallery-interior-800.avif 800w">
+          <source type="image/webp" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/gallery-interior-400.webp 400w, /assets/images/gallery-interior-800.webp 800w">
+          <img class="photo" src="/assets/images/gallery-interior.jpg" alt="Зал CRAFT: стойка с кофемашиной, кресло для ожидания" width="1000" height="1500" loading="lazy">
+        </picture>
       </div>
       <div class="gallery__item gallery__item--wide photo-frame reveal-fade">
-        <img class="photo" src="/assets/images/gallery-2.jpg" alt="Рабочее место мастера в CRAFT (временное фото — заменить на реальную съёмку)" width="1500" height="1000" loading="lazy">
+        <picture class="picture">
+          <source type="image/avif" sizes="(min-width: 1024px) 765px, 100vw" srcset="/assets/images/gallery-workspace-800.avif 800w, /assets/images/gallery-workspace-1200.avif 1200w">
+          <source type="image/webp" sizes="(min-width: 1024px) 765px, 100vw" srcset="/assets/images/gallery-workspace-800.webp 800w, /assets/images/gallery-workspace-1200.webp 1200w">
+          <img class="photo" src="/assets/images/gallery-workspace.jpg" alt="Рабочее место мастера CRAFT: машинка, ножницы и фен на столе" width="1500" height="1000" loading="lazy">
+        </picture>
       </div>
       <div class="gallery__item photo-frame reveal-fade">
-        <img class="photo" src="/assets/images/gallery-3.jpg" alt="Инструменты барбера CRAFT (временное фото — заменить на реальную съёмку)" width="1000" height="1000" loading="lazy">
-      </div>
-      <div class="gallery__item gallery__item--tall photo-frame reveal-fade">
-        <img class="photo" src="/assets/images/gallery-4.jpg" alt="Стрижка в процессе в CRAFT (временное фото — заменить на реальную съёмку)" width="1200" height="1500" loading="lazy">
+        <picture class="picture">
+          <source type="image/avif" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/gallery-tools-400.avif 400w, /assets/images/gallery-tools-800.avif 800w">
+          <source type="image/webp" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/gallery-tools-400.webp 400w, /assets/images/gallery-tools-800.webp 800w">
+          <img class="photo" src="/assets/images/gallery-tools.jpg" alt="Ножницы и расчёски барбера CRAFT" width="1000" height="1000" loading="lazy">
+        </picture>
       </div>
       <div class="gallery__item gallery__item--wide photo-frame reveal-fade">
-        <img class="photo" src="/assets/images/gallery-5.jpg" alt="Фасад CRAFT на Лиговском проспекте, 71А (временное фото — заменить на реальную съёмку)" width="1500" height="1000" loading="lazy">
+        <picture class="picture">
+          <source type="image/avif" sizes="(min-width: 1024px) 380px, 100vw" srcset="/assets/images/work-1-400.avif 400w, /assets/images/work-1-800.avif 800w, /assets/images/work-1-1300.avif 1300w">
+          <source type="image/webp" sizes="(min-width: 1024px) 380px, 100vw" srcset="/assets/images/work-1-400.webp 400w, /assets/images/work-1-800.webp 800w, /assets/images/work-1-1300.webp 1300w">
+          <img class="photo" src="/assets/images/work-1.jpg" alt="Пример работы CRAFT: мужская стрижка с чётким переходом и укладкой набок" width="1300" height="1000" loading="lazy">
+        </picture>
       </div>
       <div class="gallery__item photo-frame reveal-fade">
-        <img class="photo" src="/assets/images/gallery-6.jpg" alt="Деталь интерьера CRAFT (временное фото — заменить на реальную съёмку)" width="1000" height="1300" loading="lazy">
+        <picture class="picture">
+          <source type="image/avif" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/work-2-400.avif 400w, /assets/images/work-2-800.avif 800w">
+          <source type="image/webp" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/work-2-400.webp 400w, /assets/images/work-2-800.webp 800w">
+          <img class="photo" src="/assets/images/work-2.jpg" alt="Пример работы CRAFT: короткая стрижка с ровной чёлкой и высоким фейдом" width="1200" height="1600" loading="lazy">
+        </picture>
+      </div>
+      <div class="gallery__item photo-frame reveal-fade">
+        <picture class="picture">
+          <source type="image/avif" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/work-3-400.avif 400w, /assets/images/work-3-800.avif 800w">
+          <source type="image/webp" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/work-3-400.webp 400w, /assets/images/work-3-800.webp 800w">
+          <img class="photo" src="/assets/images/work-3.jpg" alt="Пример работы CRAFT: стрижка с фейдом и оформленная борода" width="1200" height="1600" loading="lazy">
+        </picture>
+      </div>
+      <div class="gallery__item photo-frame reveal-fade">
+        <picture class="picture">
+          <source type="image/avif" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/work-4-400.avif 400w, /assets/images/work-4-800.avif 800w">
+          <source type="image/webp" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/work-4-400.webp 400w, /assets/images/work-4-800.webp 800w">
+          <img class="photo" src="/assets/images/work-4.jpg" alt="Пример работы CRAFT: удлинённый верх с зачёсом назад и коротко выбритыми висками" width="1200" height="1600" loading="lazy">
+        </picture>
+      </div>
+      <div class="gallery__item photo-frame reveal-fade">
+        <picture class="picture">
+          <source type="image/avif" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/gallery-cut-400.avif 400w, /assets/images/gallery-cut-800.avif 800w">
+          <source type="image/webp" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/gallery-cut-400.webp 400w, /assets/images/gallery-cut-800.webp 800w">
+          <img class="photo" src="/assets/images/gallery-cut.jpg" alt="Мастер CRAFT стрижёт затылок ножницами" width="1200" height="1500" loading="lazy">
+        </picture>
+      </div>
+      <div class="gallery__item gallery__item--wide photo-frame reveal-fade">
+        <picture class="picture">
+          <source type="image/avif" sizes="(min-width: 1024px) 765px, 100vw" srcset="/assets/images/gallery-facade-800.avif 800w, /assets/images/gallery-facade-1200.avif 1200w">
+          <source type="image/webp" sizes="(min-width: 1024px) 765px, 100vw" srcset="/assets/images/gallery-facade-800.webp 800w, /assets/images/gallery-facade-1200.webp 1200w">
+          <img class="photo photo--top" src="/assets/images/gallery-facade.jpg" alt="Фасад CRAFT на Лиговском проспекте, 71А" width="1500" height="1000" loading="lazy">
+        </picture>
       </div>
     </div>
   </section>
@@ -457,7 +525,9 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
   <div class="section-inner site-footer__inner">
     <div class="site-footer__brand">
       <a class="wordmark wordmark--footer" href="#top" aria-label="CRAFT — наверх">
-        <img class="wordmark__mark" src="/assets/images/logo.png" alt="" width="400" height="389">
+        <img class="wordmark__mark" src="/assets/images/logo-96.png"
+           srcset="/assets/images/logo-48.png 48w, /assets/images/logo-96.png 96w, /assets/images/logo-160.png 160w"
+           sizes="41px" alt="" width="400" height="389">
         <span class="wordmark__main">CRAFT</span>
       </a>
 

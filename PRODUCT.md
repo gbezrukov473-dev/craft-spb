@@ -30,7 +30,8 @@ Single physical location, walk-in service plus appointments. Booking happens thr
 
 - Static single-page site, no backend/server logic, no CMS. Built via Vite; see Stack.
 - Primary conversion action: the booking CTA links out to YCLIENTS: `https://n234517.yclients.com/company/231076/personal/menu?o=m-1`.
-- Real logo, hero photo, and team photo were supplied by the owner and are in use (`public/assets/images/logo.png`, `hero-main.jpg`, `team.jpg`). The gallery's six slots remain clearly-labeled placeholders pending real shop photography.
+- Real shop photography was supplied by the owner and is in use: logo, hero, team, the "why" portrait, and six of the gallery's nine slots (interior, workspace, tools, cut-in-progress, facade, and one work example). All live under `public/assets/images/`.
+- The gallery's three remaining slots (`work-2.jpg`, `work-3.jpg`, `work-4.jpg`) are clearly-labeled placeholders awaiting three more work-example photos, to be delivered at **1200×1600 (3:4 portrait)** so the work triptych shares one aspect ratio. Regenerate them with `scripts/gen-placeholders.sh`.
 - Real customer reviews (3, with reviewer name and date) were supplied and are in use, replacing the earlier sample placeholders. Yandex/2GIS aggregate counts stay in Evidence on Hand.
 
 ## Brand Commitments

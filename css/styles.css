@@ -324,6 +324,19 @@ html.nav-open { overflow: hidden; }
   filter: grayscale(18%) contrast(1.06) saturate(0.9);
 }
 
+/* Anchors a crop to the top edge — for shots whose subject sits at the very top
+   of the frame (the facade sign) and would lose its head to a centred cover. */
+.photo--top { object-position: 50% 0; }
+
+/* <picture> — только обёртка для выбора формата (AVIF → WebP → исходный JPEG).
+   Собственного бокса она заводить не должна: иначе height:100% у .photo стал бы
+   считаться от инлайн-элемента нулевой высоты и картинка схлопнулась бы. */
+.picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .photo-frame {
   position: relative;
   overflow: hidden;
@@ -472,6 +485,46 @@ html.nav-open { overflow: hidden; }
 .price-list__row--primary .price-list__name { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; }
 .price-list__row--primary .price-list__price { color: var(--accent-dark); }
 
+/* Sub-row: a variant of the primary service above it, not a service of its own.
+   Indented behind a hairline tick, set one step quieter, and given a tighter
+   top pad so it reads as attached to the row it qualifies. */
+/* The divider between a service and its own variant would read as a split, so
+   it is dropped. Without :has() support the rule simply no-ops and the list
+   keeps its regular rhythm. */
+.price-list__row:has(+ .price-list__row--sub) {
+  border-bottom: 0;
+  padding-bottom: var(--sp-1);
+}
+.price-list__row--sub {
+  padding-block: var(--sp-1) var(--sp-3);
+  padding-left: var(--sp-3);
+  position: relative;
+  color: var(--ink-soft);
+}
+/* The elbow that ties the variant to the service above it. Reaches up past the
+   row's own padding so the stem starts under the primary row's baseline. */
+.price-list__row--sub::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: calc(var(--sp-1) * -1);
+  width: var(--sp-2);
+  height: 1.6em;
+  border-left: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+}
+.price-list__row--sub .price-list__name { font-size: var(--fs-body); font-weight: 600; }
+.price-list__row--sub .price-list__price { font-size: var(--fs-body); }
+.price-list__row--sub .price-list__rule { border-bottom-color: var(--line); }
+
+/* The "why it costs more" line, kept on the same row so the list stays a list. */
+.price-list__hint {
+  display: block;
+  font-size: var(--fs-small);
+  font-weight: 400;
+  color: var(--ink-faint);
+}
+
 .services__cta { margin-top: var(--sp-4); }
 
 /* ---------- Why CRAFT ---------- */
@@ -562,17 +615,25 @@ html.nav-open { overflow: hidden; }
 .gallery__item--wide { aspect-ratio: 16/10; }
 
 /* Hand-placed at every breakpoint, per the system's grid rule. Auto-flow put
-   the two `span 2` plates on their own rows and left two empty cells behind. */
+   the two `span 2` plates on their own rows and left two empty cells behind.
+   Nine tiles: the three full-width rows are the landscape shots, the paired
+   cells are portraits, so no photo is ever cropped against its orientation. */
 @media (min-width: 640px) {
   .gallery__grid { grid-template-columns: repeat(2, 1fr); }
-  .gallery__item:nth-child(1) { grid-column: 1; grid-row: 1; }
-  .gallery__item:nth-child(3) { grid-column: 2; grid-row: 1; }
+  .gallery__item:nth-child(1) { grid-column: 1;      grid-row: 1; }
+  .gallery__item:nth-child(3) { grid-column: 2;      grid-row: 1; }
   .gallery__item:nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
-  .gallery__item:nth-child(4) { grid-column: 1; grid-row: 3; }
-  .gallery__item:nth-child(6) { grid-column: 2; grid-row: 3; }
-  .gallery__item:nth-child(5) { grid-column: 1 / -1; grid-row: 4; }
+  .gallery__item:nth-child(4) { grid-column: 1 / -1; grid-row: 3; }
+  .gallery__item:nth-child(5) { grid-column: 1;      grid-row: 4; }
+  .gallery__item:nth-child(6) { grid-column: 2;      grid-row: 4; }
+  .gallery__item:nth-child(7) { grid-column: 1;      grid-row: 5; }
+  .gallery__item:nth-child(8) { grid-column: 2;      grid-row: 5; }
+  .gallery__item:nth-child(9) { grid-column: 1 / -1; grid-row: 6; }
 }
 
+/* Six columns, six rows. Cell maths at the 76rem container: a 2×2 cell is
+   ~331×440 (3:4, portrait), a 2×1 is ~331×208 (~16:10), a 4×2 is ~685×440
+   (~3:2) and a 4×1 is ~685×208 (a deliberate panorama strip). */
 @media (min-width: 1024px) {
   .gallery__grid {
     grid-template-columns: repeat(6, 1fr);
@@ -583,8 +644,12 @@ html.nav-open { overflow: hidden; }
   .gallery__item:nth-child(2) { grid-column: 3 / 7; grid-row: 1 / 2; }
   .gallery__item:nth-child(3) { grid-column: 3 / 5; grid-row: 2 / 3; }
   .gallery__item:nth-child(4) { grid-column: 5 / 7; grid-row: 2 / 3; }
-  .gallery__item:nth-child(5) { grid-column: 1 / 5; grid-row: 3 / 4; }
-  .gallery__item:nth-child(6) { grid-column: 5 / 7; grid-row: 3 / 4; }
+  /* Work triptych — three equal portraits across the full width. */
+  .gallery__item:nth-child(5) { grid-column: 1 / 3; grid-row: 3 / 5; }
+  .gallery__item:nth-child(6) { grid-column: 3 / 5; grid-row: 3 / 5; }
+  .gallery__item:nth-child(7) { grid-column: 5 / 7; grid-row: 3 / 5; }
+  .gallery__item:nth-child(8) { grid-column: 1 / 3; grid-row: 5 / 7; }
+  .gallery__item:nth-child(9) { grid-column: 3 / 7; grid-row: 5 / 7; }
 }
 
 .gallery__item .photo { transition: transform 0.6s var(--ease-out); }
@@ -723,12 +788,14 @@ html.nav-open { overflow: hidden; }
 
 /* Three columns, three children. The social row used to be a fourth child in a
    three-track grid, so it wrapped onto its own line under the wordmark; it now
-   lives inside the brand column where it belongs. */
+   lives inside the brand column where it belongs.
+   No rule across the top: the dark final-CTA band already ends the page body,
+   so a hairline under it only restated an edge the eye had. Its clearance goes
+   with it, which lifts the whole footer closer to that band. */
 .site-footer__inner {
   display: grid;
   gap: var(--sp-4);
-  padding-block: var(--sp-4);
-  border-top: 1px solid var(--line-strong);
+  padding-bottom: var(--sp-4);
 }
 @media (min-width: 780px) {
   .site-footer__inner { grid-template-columns: auto 1fr auto; align-items: start; gap: var(--sp-5); }

@@ -74,7 +74,8 @@ Density is low and confident: long stretches of quiet paper-toned space between 
 - One accent color, used sparingly and always at full saturation — never diluted into a tint or wash.
 - Every headline, list, and stat aligns to the same shared content margin as the header — no element sits closer to the frame edge than another.
 - Lists over cards: services, reviews, and hours are typographic rows with hairline rules, never bordered tiles.
-- Real client photography (hero, team) is duotone-graded to match the system; the gallery's six slots remain clearly-labeled placeholders pending real shop photography.
+- Real client photography (hero, team, gallery) is duotone-graded to match the system; three of the gallery's nine slots remain clearly-labeled placeholders pending the last work-example shots.
+- The gallery mosaic assigns each slot an aspect ratio that matches its photo's orientation: 2×2 desktop cells resolve to 3:4 portrait, the 4-column bands to ~3:2 landscape. New photography is commissioned to those ratios rather than cropped against them.
 
 ## Colors
 

@@ -5,10 +5,12 @@
   "description": "CRAFT barbershop — Saint Petersburg. Static site.",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "node scripts/compress-images.mjs && vite build",
+    "preview": "vite preview",
+    "images": "node scripts/compress-images.mjs"
   },
   "devDependencies": {
+    "sharp": "^0.35.3",
     "vite": "^6.0.0"
   }
 }

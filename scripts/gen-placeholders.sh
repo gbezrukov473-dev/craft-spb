@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
+# Regenerates the stand-in rasters for shots the shop has not delivered yet.
+# Every other image under public/assets/images is real photography — do not
+# overwrite it from here.
 set -e
 FONT="C\:/Windows/Fonts/arial.ttf"
 FONTB="C\:/Windows/Fonts/arialbd.ttf"
-OUT="D:/Craft/assets/images"
+OUT="D:/Craft/public/assets/images"
 INK="0x1C1114"
 PAPER="0xF3EEE6"
 
@@ -15,17 +18,13 @@ gen() {
     drawbox=x=24:y=24:w=iw-48:h=ih-48:color=${INK}@1.0:t=2,
     drawtext=fontfile='${FONTB}':text='${label}':fontcolor=${INK}:fontsize=${fs1}:x=(w-text_w)/2:y=(h-text_h)/2-${fs2},
     drawtext=fontfile='${FONT}':text='${sub}':fontcolor=${INK}@0.7:fontsize=${fs2}:x=(w-text_w)/2:y=(h-text_h)/2+${fs1}
-  " -frames:v 1 -q:v 3 "${OUT}/${name}.jpg"
+  " -frames:v 1 -q:v 4 "${OUT}/${name}.jpg"
 }
 
-gen "hero-main"      1920 1280 "HERO — БАРБЕР ЗА РАБОТОЙ"      "PLACEHOLDER 1920x1280 — заменить на реальное фото"
-gen "gallery-1"      1200 1500 "ИНТЕРЬЕР ЗАЛА"                  "PLACEHOLDER 1200x1500"
-gen "gallery-2"      1500 1000 "РАБОЧЕЕ МЕСТО МАСТЕРА"          "PLACEHOLDER 1500x1000"
-gen "gallery-3"      1000 1000 "ИНСТРУМЕНТЫ"                    "PLACEHOLDER 1000x1000"
-gen "gallery-4"      1200 1500 "СТРИЖКА В ПРОЦЕССЕ"             "PLACEHOLDER 1200x1500"
-gen "gallery-5"      1500 1000 "ФАСАД, ЛИГОВСКИЙ 71А"           "PLACEHOLDER 1500x1000"
-gen "gallery-6"      1000 1300 "ДЕТАЛЬ / ТЕКСТУРА"              "PLACEHOLDER 1000x1300"
-gen "why-portrait"   1000 1250 "МАСТЕР CRAFT"                   "PLACEHOLDER 1000x1250"
-gen "og-image"       1200 630  "CRAFT — БАРБЕРШОП НА ЛИГОВСКОМ" "PLACEHOLDER OG 1200x630"
+# Work triptych — three portraits sharing one gallery row, so they must share
+# one aspect ratio. 3:4 is what the 2x2 desktop cell resolves to.
+gen "work-2" 1200 1600 "ПРИМЕР РАБОТЫ 2" "PLACEHOLDER 1200x1600 (3\:4)"
+gen "work-3" 1200 1600 "ПРИМЕР РАБОТЫ 3" "PLACEHOLDER 1200x1600 (3\:4)"
+gen "work-4" 1200 1600 "ПРИМЕР РАБОТЫ 4" "PLACEHOLDER 1200x1600 (3\:4)"
 
 echo "done"
