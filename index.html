@@ -13,57 +13,281 @@
 <meta property="og:site_name" content="CRAFT">
 <meta property="og:title" content="CRAFT — барбершоп на Лиговском, Санкт-Петербург">
 <meta property="og:description" content="Мужские стрижки, борода, детские стрижки. Рейтинг 5.0 на Яндексе, 292 отзыва. Лиговский пр., 71А. Онлайн-запись.">
-<meta property="og:image" content="/assets/images/og-image.jpg">
+<meta property="og:image" content="https://craftspb.ru/assets/images/og-image.jpg">
+<meta property="og:image:alt" content="CRAFT — барбершоп на Лиговском проспекте, 71А">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://craftspb.ru/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="CRAFT — барбершоп на Лиговском, Санкт-Петербург">
 <meta name="twitter:description" content="Мужские стрижки, борода, детские стрижки. Рейтинг 5.0 на Яндексе, 292 отзыва. Онлайн-запись.">
-<meta name="twitter:image" content="/assets/images/og-image.jpg">
+<meta name="twitter:image" content="https://craftspb.ru/assets/images/og-image.jpg">
 
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="/assets/images/favicon-512.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon-180.png">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800;900&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- The two subsets the first viewport needs — the Cyrillic headline and the
+     Cyrillic body copy. The Latin subsets (wordmark, prices) are discovered
+     from the stylesheet, which is now local and so arrives without a
+     third-party round trip. crossorigin is required even same-origin: fonts
+     are always fetched in CORS mode, and without it the preload is discarded
+     and fetched a second time. -->
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/unbounded-cyrillic.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/golos-text-cyrillic.woff2" crossorigin>
+
+<!-- LCP candidate. Without this the hero is only discovered after the CSS
+     parses; fetchpriority on the <img> alone cannot pull that discovery
+     earlier. imagesrcset/imagesizes mirror the <picture> below exactly, so the
+     preload and the element resolve to the same file. -->
+<link rel="preload" as="image" type="image/avif" fetchpriority="high"
+      imagesrcset="/assets/images/hero-main-960.avif 960w, /assets/images/hero-main-1440.avif 1440w, /assets/images/hero-main-1920.avif 1920w"
+      imagesizes="100vw">
 
 <link rel="stylesheet" href="/css/styles.css">
-<noscript><style>.reveal-fade,.reveal-line{opacity:1!important;transform:none!important}</style></noscript>
+
+<!-- ЯНДЕКС.МЕТРИКА — ПОДКЛЮЧИТЬ ПОСЛЕ ЗАПУСКА ----------------------------------
+     1. Создайте счётчик на https://metrika.yandex.ru и подставьте его номер
+        вместо 00000000 в обеих строках ниже.
+     2. Раскомментируйте блок.
+     3. Метрика пишет cookie и собирает IP — это обработка персональных данных,
+        поэтому инициализировать её нужно ТОЛЬКО после согласия, через тот же
+        гейт, что и карту:
+            window.craftConsent.onGrant(function () { ym(00000000, "init", {...}); });
+        Баннер согласия уже на странице. Остаётся подать уведомление в РКН
+        об обработке ПДн — политика (privacy.html) его не заменяет.
+     Цели booking_click / phone_click / whatsapp_click / telegram_click /
+     vk_click уже отправляются из js/main.js — создайте их в интерфейсе
+     Метрики с теми же идентификаторами.
+
+<script>window.craftMetrikaId = 00000000;</script>
+<script type="text/javascript">
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+ym(00000000, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true });
+</script>
+--------------------------------------------------------------------------- -->
+<noscript><style>.reveal-fade,.reveal-line{opacity:1!important;transform:none!important}/* The map is built by script; without it the button is a dead control, so the stub keeps the address and the two map links below it do the work. */.map-frame__load,.map-frame__consent{display:none}</style></noscript>
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "HairSalon",
-  "name": "CRAFT",
-  "image": "https://craftspb.ru/assets/images/og-image.jpg",
-  "telephone": "+78129525715",
-  "priceRange": "300–2700 ₽",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Лиговский проспект, 71А",
-    "addressLocality": "Санкт-Петербург",
-    "addressCountry": "RU"
-  },
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-    "opens": "10:00",
-    "closes": "21:00"
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "5.0",
-    "reviewCount": "292"
-  },
-  "sameAs": [
-    "https://vk.ru/craftcutspb",
-    "https://t.me/craftcutspb",
-    "https://www.instagram.com/hairurg.spb/",
-    "https://yandex.ru/maps/org/craft/185853909275/",
-    "https://2gis.ru/spb/firm/70000001037495220"
+  "@graph": [
+    {
+      "@type": "HairSalon",
+      "@id": "https://craftspb.ru/#business",
+      "name": "CRAFT",
+      "description": "Барбершоп CRAFT на Лиговском проспекте, 71А в Санкт-Петербурге: мужские стрижки, оформление бороды, детские стрижки, укладка.",
+      "url": "https://craftspb.ru/",
+      "image": [
+        "https://craftspb.ru/assets/images/og-image.jpg",
+        "https://craftspb.ru/assets/images/gallery-facade.jpg",
+        "https://craftspb.ru/assets/images/gallery-interior.jpg"
+      ],
+      "logo": "https://craftspb.ru/assets/images/favicon-512.png",
+      "telephone": "+78129525715",
+      "priceRange": "₽₽",
+      "currenciesAccepted": "RUB",
+      "paymentAccepted": "Наличные, банковские карты, СБП",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Лиговский проспект, 71А",
+        "addressLocality": "Санкт-Петербург",
+        "addressRegion": "Санкт-Петербург",
+        "addressCountry": "RU"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 59.92617,
+        "longitude": 30.357397
+      },
+      "hasMap": "https://yandex.ru/maps/org/craft/185853909275/",
+      "areaServed": {
+        "@type": "City",
+        "name": "Санкт-Петербург"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "10:00",
+        "closes": "21:00"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5.0",
+        "reviewCount": "292",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "review": [
+        {
+          "@type": "Review",
+          "author": {
+            "@type": "Person",
+            "name": "Юрий В."
+          },
+          "datePublished": "2025-05-29",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5",
+            "bestRating": "5"
+          },
+          "reviewBody": "Мастер Саид очень красивую сделал стрижку, волосок к волоску, притом достаточно быстро, без лишних разговоров."
+        },
+        {
+          "@type": "Review",
+          "author": {
+            "@type": "Person",
+            "name": "Саша И."
+          },
+          "datePublished": "2025-11-20",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5",
+            "bestRating": "5"
+          },
+          "reviewBody": "Это очень классное, атмосферное место, которое создано людьми для людей. Подход ребят очень тёплый и профессиональный."
+        },
+        {
+          "@type": "Review",
+          "author": {
+            "@type": "Person",
+            "name": "Даниил К."
+          },
+          "datePublished": "2025-02-22",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5",
+            "bestRating": "5"
+          },
+          "reviewBody": "Всё понравилось, помогли определиться с причёской, быстро и качественно постригли. Мастера все хорошие, расположение удобное."
+        }
+      ],
+      "potentialAction": {
+        "@type": "ReserveAction",
+        "name": "Записаться онлайн",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://n234517.yclients.com/company/231076/personal/menu?o=m-1",
+          "inLanguage": "ru-RU",
+          "actionPlatform": [
+            "http://schema.org/DesktopWebPlatform",
+            "http://schema.org/MobileWebPlatform"
+          ]
+        }
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Услуги барбершопа CRAFT",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "price": "1700",
+            "priceCurrency": "RUB",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Мужская стрижка"
+            }
+          },
+          {
+            "@type": "Offer",
+            "price": "2000",
+            "priceCurrency": "RUB",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Мужская стрижка, длина от 5 см"
+            }
+          },
+          {
+            "@type": "Offer",
+            "price": "2400",
+            "priceCurrency": "RUB",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Стрижка + борода"
+            }
+          },
+          {
+            "@type": "Offer",
+            "price": "2700",
+            "priceCurrency": "RUB",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Стрижка + борода, длина от 5 см"
+            }
+          },
+          {
+            "@type": "Offer",
+            "price": "1100",
+            "priceCurrency": "RUB",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Оформление бороды"
+            }
+          },
+          {
+            "@type": "Offer",
+            "price": "1300",
+            "priceCurrency": "RUB",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Детская стрижка"
+            }
+          },
+          {
+            "@type": "Offer",
+            "price": "600",
+            "priceCurrency": "RUB",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Стрижка одной насадкой"
+            }
+          },
+          {
+            "@type": "Offer",
+            "price": "1500",
+            "priceCurrency": "RUB",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Стрижка машинкой, несколько насадок"
+            }
+          },
+          {
+            "@type": "Offer",
+            "price": "500",
+            "priceCurrency": "RUB",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Укладка"
+            }
+          },
+          {
+            "@type": "Offer",
+            "price": "300",
+            "priceCurrency": "RUB",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Восковая депиляция, одна зона"
+            }
+          }
+        ]
+      },
+      "sameAs": [
+        "https://vk.ru/craftcutspb",
+        "https://t.me/craftcutspb",
+        "https://yandex.ru/maps/org/craft/185853909275/",
+        "https://2gis.ru/spb/firm/70000001037495220"
+      ]
+    }
   ]
 }
 </script>
@@ -100,9 +324,6 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
   </symbol>
   <symbol id="icon-vk" viewBox="0 0 24 24">
     <path d="M12.785 16.241s.288-.032.436-.194c.136-.148.132-.427.132-.427s-.02-1.304.576-1.496c.588-.19 1.343 1.26 2.145 1.818.605.422 1.064.33 1.064.33l2.137-.03s1.117-.071.587-.964c-.043-.073-.308-.661-1.588-1.87-1.34-1.264-1.16-1.059.453-3.246.983-1.332 1.376-2.145 1.253-2.493-.117-.332-.84-.244-.84-.244l-2.406.015s-.178-.025-.31.056c-.13.079-.212.263-.212.263s-.382 1.03-.89 1.907c-1.07 1.85-1.499 1.948-1.674 1.832-.407-.267-.305-1.075-.305-1.648 0-1.793.267-2.54-.521-2.733-.262-.065-.454-.107-1.123-.114-.858-.009-1.585.003-1.996.208-.274.136-.485.44-.356.457.159.022.519.099.71.363.246.341.237 1.107.237 1.107s.142 2.11-.33 2.371c-.325.18-.771-.187-1.727-1.865-.489-.859-.859-1.81-.859-1.81s-.071-.176-.2-.271c-.155-.114-.372-.15-.372-.15l-2.286.015s-.343.01-.469.16c-.112.133-.009.409-.009.409s1.79 4.258 3.815 6.404c1.858 1.967 3.968 1.838 3.968 1.838h.951z"/>
-  </symbol>
-  <symbol id="icon-instagram" viewBox="0 0 24 24">
-    <path d="M12 0C8.74 0 8.333.014 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.014 8.333 0 8.74 0 12s.014 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.986 8.74 24 12 24s3.667-.014 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.014-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.014 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zM12 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm7.846-10.405a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/>
   </symbol>
   <symbol id="icon-phone" viewBox="0 0 24 24">
     <path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1L6.6 10.8z"/>
@@ -204,7 +425,7 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
       </div>
       <div class="proof-item">
         <span class="proof-item__value">Лиговский, 71А</span>
-        <span class="proof-item__label">рядом с метро</span>
+        <span class="proof-item__label">6 минут от пл. Восстания</span>
       </div>
     </div>
   </section>
@@ -267,6 +488,12 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
         </li>
       </ul>
 
+      <p class="price-note reveal-fade">
+        Цены указаны в рублях и не являются публичной офертой. Точную стоимость
+        мастер называет до начала работы — она зависит от длины волос и объёма.
+        Актуальный прайс и свободное время всегда есть в онлайн-записи.
+      </p>
+
       <div class="services__cta reveal-fade">
         <a class="btn btn--accent" href="https://n234517.yclients.com/company/231076/personal/menu?o=m-1" target="_blank" rel="noopener">Выбрать время</a>
       </div>
@@ -282,7 +509,7 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
           <picture class="picture">
             <source type="image/avif" sizes="(min-width: 400px) 352px, 100vw" srcset="/assets/images/why-portrait-400.avif 400w, /assets/images/why-portrait-720.avif 720w">
             <source type="image/webp" sizes="(min-width: 400px) 352px, 100vw" srcset="/assets/images/why-portrait-400.webp 400w, /assets/images/why-portrait-720.webp 720w">
-            <img class="photo" src="/assets/images/why-portrait.jpg" alt="Барберы CRAFT у входа в барбершоп на Лиговском" width="1000" height="1250" loading="lazy">
+            <img class="photo" src="/assets/images/why-portrait.jpg" alt="Барберы CRAFT у входа в барбершоп на Лиговском" width="1000" height="1250" loading="lazy" decoding="async">
           </picture>
         </div>
       </div>
@@ -302,7 +529,7 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
         </div>
         <div class="why__item reveal-fade">
           <dt>Расположение</dt>
-          <dd>Лиговский проспект, 71А — в двух шагах от метро, в самом ритме центра Петербурга.</dd>
+          <dd>Лиговский проспект, 71А — шесть минут пешком от площади Восстания, в самом ритме центра Петербурга.</dd>
         </div>
       </dl>
     </div>
@@ -316,8 +543,8 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
         <p class="about__lead reveal-fade">Команда CRAFT — <b>сложившийся коллектив барберов с опытом от 7 лет</b>. Мы следим за техникой и современными тенденциями, но начинаем с главного: внимательно слушаем, что нужно именно вам, и вместе выбираем форму, которая пойдёт.</p>
         <dl class="about__stats reveal-fade">
           <div class="about__stat">
-            <dt><span class="odometer" data-tick="1500">23 985</span></dt>
-            <dd>стрижек</dd>
+            <dt><span class="odometer">23 985</span></dt>
+            <dd>стрижек с момента открытия</dd>
           </div>
           <div class="about__stat">
             <dt>от 7 лет</dt>
@@ -331,7 +558,7 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
           <picture class="picture">
             <source type="image/avif" sizes="(min-width: 900px) 540px, 100vw" srcset="/assets/images/team-560.avif 560w, /assets/images/team-1080.avif 1080w">
             <source type="image/webp" sizes="(min-width: 900px) 540px, 100vw" srcset="/assets/images/team-560.webp 560w, /assets/images/team-1080.webp 1080w">
-            <img class="photo" src="/assets/images/team.jpg" alt="Команда барберов CRAFT" width="1080" height="1080" loading="lazy">
+            <img class="photo" src="/assets/images/team.jpg" alt="Команда барберов CRAFT" width="1080" height="1080" loading="lazy" decoding="async">
           </picture>
         </div>
         <figcaption class="about__caption">Команда CRAFT</figcaption>
@@ -354,63 +581,63 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
         <picture class="picture">
           <source type="image/avif" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/gallery-interior-400.avif 400w, /assets/images/gallery-interior-800.avif 800w">
           <source type="image/webp" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/gallery-interior-400.webp 400w, /assets/images/gallery-interior-800.webp 800w">
-          <img class="photo" src="/assets/images/gallery-interior.jpg" alt="Зал CRAFT: стойка с кофемашиной, кресло для ожидания" width="1000" height="1500" loading="lazy">
+          <img class="photo" src="/assets/images/gallery-interior.jpg" alt="Зал CRAFT: стойка с кофемашиной, кресло для ожидания" width="1000" height="1500" loading="lazy" decoding="async">
         </picture>
       </div>
       <div class="gallery__item gallery__item--wide photo-frame reveal-fade">
         <picture class="picture">
           <source type="image/avif" sizes="(min-width: 1024px) 765px, 100vw" srcset="/assets/images/gallery-workspace-800.avif 800w, /assets/images/gallery-workspace-1200.avif 1200w">
           <source type="image/webp" sizes="(min-width: 1024px) 765px, 100vw" srcset="/assets/images/gallery-workspace-800.webp 800w, /assets/images/gallery-workspace-1200.webp 1200w">
-          <img class="photo" src="/assets/images/gallery-workspace.jpg" alt="Рабочее место мастера CRAFT: машинка, ножницы и фен на столе" width="1500" height="1000" loading="lazy">
+          <img class="photo" src="/assets/images/gallery-workspace.jpg" alt="Рабочее место мастера CRAFT: машинка, ножницы и фен на столе" width="1500" height="1000" loading="lazy" decoding="async">
         </picture>
       </div>
       <div class="gallery__item photo-frame reveal-fade">
         <picture class="picture">
           <source type="image/avif" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/gallery-tools-400.avif 400w, /assets/images/gallery-tools-800.avif 800w">
           <source type="image/webp" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/gallery-tools-400.webp 400w, /assets/images/gallery-tools-800.webp 800w">
-          <img class="photo" src="/assets/images/gallery-tools.jpg" alt="Ножницы и расчёски барбера CRAFT" width="1000" height="1000" loading="lazy">
+          <img class="photo" src="/assets/images/gallery-tools.jpg" alt="Ножницы и расчёски барбера CRAFT" width="1000" height="1000" loading="lazy" decoding="async">
         </picture>
       </div>
       <div class="gallery__item gallery__item--wide photo-frame reveal-fade">
         <picture class="picture">
           <source type="image/avif" sizes="(min-width: 1024px) 380px, 100vw" srcset="/assets/images/work-1-400.avif 400w, /assets/images/work-1-800.avif 800w, /assets/images/work-1-1300.avif 1300w">
           <source type="image/webp" sizes="(min-width: 1024px) 380px, 100vw" srcset="/assets/images/work-1-400.webp 400w, /assets/images/work-1-800.webp 800w, /assets/images/work-1-1300.webp 1300w">
-          <img class="photo" src="/assets/images/work-1.jpg" alt="Пример работы CRAFT: мужская стрижка с чётким переходом и укладкой набок" width="1300" height="1000" loading="lazy">
+          <img class="photo" src="/assets/images/work-1.jpg" alt="Пример работы CRAFT: мужская стрижка с чётким переходом и укладкой набок" width="1300" height="1000" loading="lazy" decoding="async">
         </picture>
       </div>
       <div class="gallery__item photo-frame reveal-fade">
         <picture class="picture">
           <source type="image/avif" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/work-2-400.avif 400w, /assets/images/work-2-800.avif 800w">
           <source type="image/webp" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/work-2-400.webp 400w, /assets/images/work-2-800.webp 800w">
-          <img class="photo" src="/assets/images/work-2.jpg" alt="Пример работы CRAFT: короткая стрижка с ровной чёлкой и высоким фейдом" width="1200" height="1600" loading="lazy">
+          <img class="photo" src="/assets/images/work-2.jpg" alt="Пример работы CRAFT: короткая стрижка с ровной чёлкой и высоким фейдом" width="1200" height="1600" loading="lazy" decoding="async">
         </picture>
       </div>
       <div class="gallery__item photo-frame reveal-fade">
         <picture class="picture">
           <source type="image/avif" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/work-3-400.avif 400w, /assets/images/work-3-800.avif 800w">
           <source type="image/webp" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/work-3-400.webp 400w, /assets/images/work-3-800.webp 800w">
-          <img class="photo" src="/assets/images/work-3.jpg" alt="Пример работы CRAFT: стрижка с фейдом и оформленная борода" width="1200" height="1600" loading="lazy">
+          <img class="photo" src="/assets/images/work-3.jpg" alt="Пример работы CRAFT: стрижка с фейдом и оформленная борода" width="1200" height="1600" loading="lazy" decoding="async">
         </picture>
       </div>
       <div class="gallery__item photo-frame reveal-fade">
         <picture class="picture">
           <source type="image/avif" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/work-4-400.avif 400w, /assets/images/work-4-800.avif 800w">
           <source type="image/webp" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/work-4-400.webp 400w, /assets/images/work-4-800.webp 800w">
-          <img class="photo" src="/assets/images/work-4.jpg" alt="Пример работы CRAFT: удлинённый верх с зачёсом назад и коротко выбритыми висками" width="1200" height="1600" loading="lazy">
+          <img class="photo" src="/assets/images/work-4.jpg" alt="Пример работы CRAFT: удлинённый верх с зачёсом назад и коротко выбритыми висками" width="1200" height="1600" loading="lazy" decoding="async">
         </picture>
       </div>
       <div class="gallery__item photo-frame reveal-fade">
         <picture class="picture">
           <source type="image/avif" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/gallery-cut-400.avif 400w, /assets/images/gallery-cut-800.avif 800w">
           <source type="image/webp" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" srcset="/assets/images/gallery-cut-400.webp 400w, /assets/images/gallery-cut-800.webp 800w">
-          <img class="photo" src="/assets/images/gallery-cut.jpg" alt="Мастер CRAFT стрижёт затылок ножницами" width="1200" height="1500" loading="lazy">
+          <img class="photo" src="/assets/images/gallery-cut.jpg" alt="Мастер CRAFT стрижёт затылок ножницами" width="1200" height="1500" loading="lazy" decoding="async">
         </picture>
       </div>
       <div class="gallery__item gallery__item--wide photo-frame reveal-fade">
         <picture class="picture">
           <source type="image/avif" sizes="(min-width: 1024px) 765px, 100vw" srcset="/assets/images/gallery-facade-800.avif 800w, /assets/images/gallery-facade-1200.avif 1200w">
           <source type="image/webp" sizes="(min-width: 1024px) 765px, 100vw" srcset="/assets/images/gallery-facade-800.webp 800w, /assets/images/gallery-facade-1200.webp 1200w">
-          <img class="photo photo--top" src="/assets/images/gallery-facade.jpg" alt="Фасад CRAFT на Лиговском проспекте, 71А" width="1500" height="1000" loading="lazy">
+          <img class="photo photo--top" src="/assets/images/gallery-facade.jpg" alt="Фасад CRAFT на Лиговском проспекте, 71А" width="1500" height="1000" loading="lazy" decoding="async">
         </picture>
       </div>
     </div>
@@ -435,24 +662,24 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
       <ul class="review-list">
         <li class="review-row reveal-fade">
           <div class="review-row__head">
-            <span class="review-row__stars" aria-hidden="true"><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg></span>
-            <span class="review-row__author">Юрий Воробьёв</span>
-            <span class="review-row__tag">29 мая</span>
+            <span class="review-row__stars"><span class="sr-only">Оценка 5 из 5.</span><span aria-hidden="true"><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg></span></span>
+            <span class="review-row__author">Юрий В.</span>
+            <span class="review-row__tag">29 мая 2025</span>
           </div>
           <p class="review-row__text">«Мастер Саид очень красивую сделал стрижку, волосок к волоску, притом достаточно быстро, без лишних разговоров. Как будто скинул лет 10 сразу, я доволен!»</p>
         </li>
         <li class="review-row reveal-fade">
           <div class="review-row__head">
-            <span class="review-row__stars" aria-hidden="true"><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg></span>
-            <span class="review-row__author">Саша Импишов</span>
+            <span class="review-row__stars"><span class="sr-only">Оценка 5 из 5.</span><span aria-hidden="true"><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg></span></span>
+            <span class="review-row__author">Саша И.</span>
             <span class="review-row__tag">20 ноября 2025</span>
           </div>
           <p class="review-row__text">«Это очень классное, атмосферное место, которое создано людьми для людей. Всё просто, но в то же время подход ребят очень тёплый и профессиональный. Попробуйте сходить сюда больше чем 1–2 раза, и поймёте, о чём я говорю. Спасибо мастеру Александру! Помимо навыков владения инвентарём, он отличный собеседник и просто классный парень.»</p>
         </li>
         <li class="review-row reveal-fade">
           <div class="review-row__head">
-            <span class="review-row__stars" aria-hidden="true"><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg></span>
-            <span class="review-row__author">Даниил Кунавин</span>
+            <span class="review-row__stars"><span class="sr-only">Оценка 5 из 5.</span><span aria-hidden="true"><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg><svg class="star" viewBox="0 0 24 24"><use href="#icon-star"/></svg></span></span>
+            <span class="review-row__author">Даниил К.</span>
             <span class="review-row__tag">22 февраля 2025</span>
           </div>
           <p class="review-row__text">«Всё понравилось, помогли определиться с причёской, быстро и качественно постригли. Мастера все хорошие, расположение удобное. Кофе налили, волосы постригли, ребятам уважение.»</p>
@@ -480,6 +707,14 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
             <dt>Телефон</dt>
             <dd><a href="tel:+78129525715">+7 (812) 952-57-15</a></dd>
           </div>
+          <div>
+            <dt>Как добраться</dt>
+            <dd>6 минут пешком от метро «Площадь&nbsp;Восстания»</dd>
+          </div>
+          <div>
+            <dt>Оплата</dt>
+            <dd>Наличные, карта, СБП</dd>
+          </div>
         </dl>
 
         <p class="contacts__note">Нужна парковка у входа — позвоните заранее, поможем сориентироваться.</p>
@@ -488,17 +723,18 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
           <a href="https://t.me/craftcutspb" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-telegram"/></svg>Telegram</a>
           <a href="https://wa.me/79990643618?text=Добрый%20день!%20" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-whatsapp"/></svg>WhatsApp</a>
           <a href="https://vk.ru/craftcutspb" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-vk"/></svg>VK</a>
-          <a href="https://www.instagram.com/hairurg.spb/" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-instagram"/></svg>Instagram</a>
         </div>
       </div>
 
       <div class="contacts__map reveal-fade">
-        <div class="map-frame">
-          <p class="map-frame__fallback">Лиговский пр., 71А</p>
-          <iframe class="map-frame__embed"
-                  src="https://yandex.ru/map-widget/v1/org/craft/185853909275/?ll=30.357397%2C59.926170&amp;z=17"
-                  title="CRAFT на карте: Лиговский проспект, 71А"
-                  loading="lazy" allowfullscreen></iframe>
+        <div class="map-frame" id="map-frame"
+             data-map-src="https://yandex.ru/map-widget/v1/org/craft/185853909275/?ll=30.357397%2C59.926170&amp;z=17"
+             data-map-title="CRAFT на карте: Лиговский проспект, 71А">
+          <div class="map-frame__stub">
+            <p class="map-frame__fallback">Лиговский пр., 71А</p>
+            <button class="btn btn--outline map-frame__load" type="button" id="map-load">Разрешить cookie и показать карту</button>
+            <p class="map-frame__consent">Карта загружается с сервиса Яндекса — он получит ваш IP-адрес и установит свои cookie. Она появится здесь, как только вы примете cookie.</p>
+          </div>
         </div>
         <div class="contacts__map-links">
           <a class="btn btn--outline" href="https://yandex.ru/maps/org/craft/185853909275/?ll=30.357397%2C59.926170&z=16" target="_blank" rel="noopener">Открыть в Яндекс.Картах</a>
@@ -534,7 +770,6 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
       <div class="site-footer__social">
         <a href="https://t.me/craftcutspb" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-telegram"/></svg>Telegram</a>
         <a href="https://vk.ru/craftcutspb" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-vk"/></svg>VK</a>
-        <a href="https://www.instagram.com/hairurg.spb/" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-instagram"/></svg>Instagram</a>
       </div>
     </div>
 
@@ -553,7 +788,25 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
     </div>
   </div>
   <div class="section-inner">
-    <p class="site-footer__copy">© <span id="year">2026</span> CRAFT</p>
+    <!-- ЗАПОЛНИТЬ ПЕРЕД ЗАПУСКОМ НА craftspb.ru ------------------------------
+         Без этих реквизитов сайт нарушает ст. 9 ЗоЗПП и ПП РФ № 1514
+         (сведения об исполнителе). Замените плейсхолдеры на данные из
+         выписки ЕГРИП/ЕГРЮЛ и удалите этот комментарий.
+         Ссылку на политику не убирайте: ч. 2 ст. 18.1 152-ФЗ требует,
+         чтобы документ был опубликован в свободном доступе.
+         ------------------------------------------------------------------ -->
+    <div class="site-footer__legal">
+      <p class="site-footer__requisites">
+        ИП&nbsp;<span data-fill="фамилия и инициалы">И.&nbsp;И.&nbsp;Иванов</span> ·
+        ОГРНИП&nbsp;<span data-fill="ОГРНИП">000000000000000</span> ·
+        ИНН&nbsp;<span data-fill="ИНН">000000000000</span><br>
+        Адрес: 191040, Санкт-Петербург, Лиговский проспект, 71А · Ежедневно 10:00–21:00
+      </p>
+      <p class="site-footer__copy">
+        © <span id="year">2026</span> CRAFT ·
+        <a href="/privacy.html">Политика обработки персональных данных</a>
+      </p>
+    </div>
   </div>
 </footer>
 
@@ -567,6 +820,20 @@ the verdict, DESIGN.md, and every shipping raster carrying its provenance.
 <button class="back-to-top" id="back-to-top" aria-label="Наверх" type="button">
   <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-up"/></svg>
 </button>
+
+<!-- Hidden until JS decides it is needed: a banner that flashes on every load
+     and then removes itself is worse than no banner. .is-visible is added only
+     when no choice has been stored yet. -->
+<div class="cookie-banner" id="cookie-banner" role="region" aria-label="Согласие на использование cookie" hidden>
+  <p class="cookie-banner__text">
+    Мы используем cookie: свои — для работы сайта, Яндекса — при загрузке карты.
+    Подробности в <a href="/privacy.html">политике обработки персональных данных</a>.
+  </p>
+  <div class="cookie-banner__actions">
+    <button class="btn btn--accent" type="button" id="cookie-accept">Принять</button>
+    <button class="btn btn--outline btn--on-ink" type="button" id="cookie-decline">Отклонить</button>
+  </div>
+</div>
 
 <script type="module" src="/js/main.js"></script>
 </body>

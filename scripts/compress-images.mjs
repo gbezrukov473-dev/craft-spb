@@ -58,6 +58,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const IMG_DIR = path.join(PROJECT_ROOT, 'public', 'assets', 'images');
+/**
+ * Исходники, которые НЕ должны попадать в деплой. Всё, что лежит в public/,
+ * Vite копирует в dist/ целиком — а мастер-файлы логотипа и фавикона (415 КБ
+ * на двоих) в разметке не упоминаются ни разу и просто висели мёртвым весом
+ * на каждой выкатке. Теперь они живут здесь: скрипт их читает, деплой — нет.
+ * Источник ищется сначала в IMG_DIR (там лежат .jpg, которые одновременно
+ * являются fallback'ом для старых браузеров), потом в MASTER_DIR.
+ */
+const MASTER_DIR = path.join(PROJECT_ROOT, 'assets-src');
 const MANIFEST_PATH = path.join(__dirname, '.image-manifest.json');
 
 /**
@@ -186,14 +195,25 @@ function encode(pipeline, format) {
   return pipeline.png({ palette: true, quality: 90, effort: 10, compressionLevel: 9 }).toBuffer();
 }
 
-async function processOne(item, manifest, stats, expected) {
-  const srcPath = path.join(IMG_DIR, item.base + item.ext);
+async function readSource(item) {
+  const name = item.base + item.ext;
+  for (const dir of [IMG_DIR, MASTER_DIR]) {
+    try {
+      return await fs.readFile(path.join(dir, name));
+    } catch (err) {
+      if (err.code !== 'ENOENT') throw err;
+    }
+  }
+  return null;
+}
 
-  let srcBuf;
-  try {
-    srcBuf = await fs.readFile(srcPath);
-  } catch (err) {
-    console.error(`  x ${item.base}${item.ext}: не удалось прочитать источник — ${err.message}`);
+async function processOne(item, manifest, stats, expected) {
+  const srcBuf = await readSource(item);
+
+  if (!srcBuf) {
+    console.error(
+      `  x ${item.base}${item.ext}: источник не найден ни в public/assets/images/, ни в assets-src/`
+    );
     stats.errors++;
     return;
   }

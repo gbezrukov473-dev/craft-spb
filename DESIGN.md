@@ -97,10 +97,12 @@ The palette is almost achromatic on purpose — one near-black warm ink, one war
 
 ## Typography
 
-**Display Font:** Unbounded (weights 700/800/900), with Arial Narrow as fallback
-**Body Font:** Golos Text (weights 400/500/600/700), with Segoe UI as fallback
+**Display Font:** Unbounded (variable, 700–900), stack `'Unbounded', 'Golos Text', 'Arial Narrow', sans-serif`
+**Body Font:** Golos Text (variable, 400–700), stack `'Golos Text', 'Segoe UI', sans-serif`
 
-**Character:** Unbounded is a bold, geometric grotesk with unusually confident, slightly industrial letterforms — it carries the "editorial/industrial" brief without leaning on any of the training-data-default display faces. Golos Text is a clean, quietly professional Cyrillic-native workhorse that never competes with the display face. Both are self-sourced webfonts (Google Fonts), never a system-font fallback in production.
+**Character:** Unbounded is a bold, geometric grotesk with unusually confident, slightly industrial letterforms — it carries the "editorial/industrial" brief without leaning on any of the training-data-default display faces. Golos Text is a clean, quietly professional Cyrillic-native workhorse that never competes with the display face. Both ship as self-hosted woff2 from `public/assets/fonts/`, never from fonts.googleapis.com and never as a system-font fallback in production: the third-party stylesheet put a DNS + TLS handshake in front of first paint, and it handed every visitor's IP to Google, which is a cross-border transfer of personal data under 152-ФЗ. Only the subsets the page renders are shipped — `latin` and `cyrillic` for both faces, plus Golos Text's `latin-ext`.
+
+**Why Golos Text sits inside the display stack.** Unbounded's `latin-ext` subset weighs 118 KB and the only glyph the page needs from it is the ruble sign, which its `latin` subset does not carry. That subset is deliberately not shipped; `₽` falls through to Golos Text's `latin-ext` (19 KB), which does carry U+20BD and sets alongside Unbounded's figures without the download. Any new face added to this system inherits the same rule: ship the subsets the page renders, and let the stack cover the orphan glyph.
 
 ### Hierarchy
 - **Display** (800, `clamp(2.1rem, 6vw + 1rem, 6rem)`, line-height 0.98): hero headline only. Uppercase, tight tracking (-0.02em), aligned to the same content margin as the header and every other section — never inset differently from its neighbors. The final-CTA headline uses a dedicated smaller display clamp (`clamp(1.55rem, 4vw + 0.6rem, 5.1rem)`) sized specifically so the longest real copy on the page ("Записывайтесь.") never breaks mid-word.
@@ -143,6 +145,19 @@ Both services and reviews are set as typographic lists with hairline row divider
 ### The Stamped Stub (signature component)
 `.stub`: `border: 1px dashed currentColor`, `transform: rotate(-1.6deg)`, tabular numerals. Used exactly twice (proof strip, contacts) for the shop's opening hours — the one place in the system where a physical, slightly imperfect artifact stands in for a plain data field.
 
+### Cookie Consent Banner
+Bottom-anchored bar on the Ink ground, square corners, hairline top edge — the same surface vocabulary as the proof strip and the closing CTA, so it reads as part of the page and not as a platform overlay. Not a modal: nothing here blocks reading, because the decision is not large enough to justify trapping the visitor in it.
+
+Three rules it must keep:
+- **Both answers are equal.** "Принять" (`.btn--accent`) and "Отклонить" (`.btn--on-ink`) are the same size, the same distance from the text, and equally legible. Declining is a state the page honours, not a dialog that returns next visit.
+- **It never covers the booking CTA.** Above the sticky bar on mobile (`bottom: var(--sticky-cta-h)`), and while a decision is outstanding `html.consent-pending` lifts `.hero__content` by the banner's measured height so the hero's own CTA stays clear. `--sticky-cta-h` and `--cookie-banner-h` are both measured in JS; the CSS values are pre-script fallbacks.
+- **`.cookie-banner[hidden]` must stay in the stylesheet.** The component's own `display: flex` outranks the UA sheet's `[hidden] { display: none }`, and without that rule the banner shows on every load regardless of the stored decision.
+
+### Consent-Gated Third-Party Frame (map)
+The Yandex map is not embedded on load; it is built when — and only when — cookies are accepted. `.map-frame` renders a stub carrying the address, one line stating what loading the map does, and a button that grants consent and fills the frame in one action. With consent already stored the iframe builds itself on load, no click. The stub doubles as the permanent fallback when the widget is blocked or JS is off (`<noscript>` hides the button, and the two map links below the frame do the work).
+
+Any future third-party embed in this system follows the same shape and the same gate: `window.craftConsent.onGrant(...)`. The page makes no third-party request until the visitor has read what it costs and agreed to it.
+
 ### Navigation
 Desktop: inline text links, uppercase, 0.875rem, an underline that grows in from the left on hover/focus (not a static underline). Mobile: a full-screen Ink-colored panel with 2rem Unbounded links, triggered by a three-line toggle that morphs to an X.
 
@@ -152,10 +167,13 @@ Desktop: inline text links, uppercase, 0.875rem, an underline that grows in from
 - **Do** keep the accent color (`#3C5A48`) confined to interactive/active moments — CTA, hover, the stub, hairline accents on focus. It should never cover more than a button's worth of area at once.
 - **Do** set lists (services, reviews, hours) as typographic rows with hairline dividers, per the price-list pattern, before reaching for a card.
 - **Do** keep every headline, list, and stat aligned to the shared content margin — consistency of the edge, not proximity to it, is what reads as considered here.
-- **Do** duotone-grade any real photography added to the system (hero and team photos already are), consistent with the flat, near-achromatic ground. The gallery's six slots still await real shop photography.
+- **Do** duotone-grade any real photography added to the system, consistent with the flat, near-achromatic ground. All nine gallery slots now carry real shop photography.
+- **Do** keep the focus ring visible against whatever ground it lands on. The Accent ring reads 6.6:1 on Paper but only 2.4:1 on Ink, so the Ink-grounded sections (hero, proof strip, mobile panel, final CTA, back-to-top) override `outline-color` to Paper. A new dark section must do the same.
+- **Do** check any text color against its actual ground before shipping it. `--ink-faint` was `#7C6B6D` (4.35:1 on Paper — under the floor, on 12–14px text) and is now `#6E5D5F` (5.36:1 on Paper, 4.81:1 on Paper Dim).
 
 ### Don't:
 - **Don't** introduce a second saturated color. If the palette feels thin, deepen the one accent or lean on Ink/Paper contrast instead.
 - **Don't** add `border-radius`, `box-shadow`, gradients, or backdrop blur as decoration. The header's `backdrop-filter` is functional (legibility over a scrolling photo), not decorative — it is the only sanctioned use.
 - **Don't** put a kicker/eyebrow label above a section heading, ever.
 - **Don't** reuse the `.stub` (stamped-ticket) treatment outside of opening-hours content — it is a named, singular device, not a generic "interesting border" utility.
+- **Don't** animate a number in a way that misstates what it is. The haircut tally is a fixed historical total: the odometer rolls it into place once, on first sight, and stops. It previously incremented every 1.5s, which implied a haircut every ninety seconds around the clock and made a true figure read as fabricated. Motion may reveal a fact; it may not invent one.

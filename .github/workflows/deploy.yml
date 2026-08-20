@@ -33,22 +33,34 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-      # Vite rewrites og:image to a relative URL, but link-preview crawlers
-      # (Telegram, WhatsApp, Slack) need absolute ones, and og:url still points
-      # at the production domain. Both are corrected to the live Pages URL, and
-      # the preview is marked noindex so it never competes with craftspb.ru.
+      # og:image and og:url are absolute craftspb.ru URLs in the source, because
+      # link-preview crawlers (Telegram, WhatsApp, VK) do not resolve relative
+      # ones. On the Pages preview those absolutes point at the wrong host, so
+      # they are rewritten to the live Pages URL here, and the preview is marked
+      # noindex so it never competes with craftspb.ru in search.
       - name: Point preview metadata at the Pages URL
         env:
           BASE: ${{ steps.pages.outputs.base_url }}
         run: |
           BASE="${BASE%/}"
-          sed -i \
-            -e "s|<meta property=\"og:url\" content=\"[^\"]*\">|<meta property=\"og:url\" content=\"$BASE/\">|" \
-            -e "s|content=\"\./assets/images/og-image\.jpg\"|content=\"$BASE/assets/images/og-image.jpg\"|g" \
-            -e "s|<head>|<head>\n<meta name=\"robots\" content=\"noindex\">|" \
-            dist/index.html
+          for f in dist/index.html dist/privacy.html; do
+            [ -f "$f" ] || continue
+            sed -i \
+              -e "s|<meta property=\"og:url\" content=\"[^\"]*\">|<meta property=\"og:url\" content=\"$BASE/\">|" \
+              -e "s|https://craftspb[.]ru/assets/images/og-image[.]jpg|$BASE/assets/images/og-image.jpg|g" \
+              -e "s|<head>|<head>\n<meta name=\"robots\" content=\"noindex\">|" \
+              "$f"
+          done
           echo "--- preview metadata ---"
           grep -E 'og:url|og:image"|twitter:image|robots' dist/index.html
+
+      # robots.txt and sitemap.xml both name craftspb.ru. Shipped as-is to the
+      # preview they would advertise the production domain from a noindex host,
+      # so the sitemap is dropped and the preview disallows crawling outright.
+      - name: Keep the preview out of search
+        run: |
+          rm -f dist/sitemap.xml
+          printf 'User-agent: *\nDisallow: /\n' > dist/robots.txt
 
       - uses: actions/upload-pages-artifact@v3
         with:
