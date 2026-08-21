@@ -590,43 +590,18 @@ html.nav-open { overflow: hidden; }
 .price-list__row--primary .price-list__name { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; }
 .price-list__row--primary .price-list__price { color: var(--accent-dark); }
 
-/* Sub-row: a variant of the primary service above it, not a service of its own.
-   Indented behind a hairline tick, set one step quieter, and given a tighter
-   top pad so it reads as attached to the row it qualifies. */
-/* The divider between a service and its own variant would read as a split, so
-   it is dropped. Without :has() support the rule simply no-ops and the list
-   keeps its regular rhythm. */
-.price-list__row:has(+ .price-list__row--sub) {
-  border-bottom: 0;
-  padding-bottom: var(--sp-1);
-}
-.price-list__row--sub {
-  padding-block: var(--sp-1) var(--sp-3);
-  padding-left: var(--sp-3);
-  position: relative;
-  color: var(--ink-soft);
-}
-/* The elbow that ties the variant to the service above it. Reaches up past the
-   row's own padding so the stem starts under the primary row's baseline. */
-.price-list__row--sub::before {
-  content: "";
-  position: absolute;
-  left: 2px;
-  top: calc(var(--sp-1) * -1);
-  width: var(--sp-2);
-  height: 1.6em;
-  border-left: 1px solid var(--line-strong);
-  border-bottom: 1px solid var(--line-strong);
-}
-.price-list__row--sub .price-list__name { font-size: var(--fs-body); font-weight: 600; }
-.price-list__row--sub .price-list__price { font-size: var(--fs-body); }
-.price-list__row--sub .price-list__rule { border-bottom-color: var(--line); }
-
-/* The "why it costs more" line, kept on the same row so the list stays a list. */
+/* The "why it costs more" line, kept on the same row so the list stays a list.
+   It sits inside a --primary name, so the display face, the uppercasing and the
+   heavy weight of that row all have to be unwound here — the hint is body copy,
+   not part of the service title. */
 .price-list__hint {
   display: block;
+  font-family: var(--font-body);
   font-size: var(--fs-small);
   font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--ink-faint);
 }
 
@@ -1030,22 +1005,95 @@ html.nav-open { overflow: hidden; }
   padding-left: 1.2em;
   list-style: none;
 }
-/* Hairline dashes rather than bullets — the same mark the price list uses. */
+/* Hairline dashes rather than bullets — the same mark the price list uses.
+   Scoped to ul: the numbered list in "Цели обработки" is referenced by number
+   in the text, so it keeps the browser's own counters. */
 .legal-page__body li {
   position: relative;
   margin-bottom: 0.35em;
 }
-.legal-page__body li::before {
+.legal-page__body ul > li::before {
   content: "—";
   position: absolute;
   left: -1.2em;
   color: var(--accent);
 }
+.legal-page__body ol {
+  margin: 0 0 var(--sp-2);
+  padding-left: 1.6em;
+}
+.legal-page__body ol > li { padding-left: 0.2em; }
+/* Run-in labels ("Посетители Сайта.", "Собственные cookie") lead a clause
+   rather than head a section, so they lift to the ink colour and stop there. */
+.legal-page__body b,
+.legal-page__body strong { color: var(--ink); font-weight: 600; }
 .legal-page__body a {
   color: var(--accent-dark);
   border-bottom: 1px solid var(--line-strong);
 }
 .legal-page__body a:hover, .legal-page__body a:focus-visible { border-color: var(--accent); }
+
+/* Label/value pairs — the operator's requisites and the defined terms. Two
+   columns where there is room, stacked below that, so a full address or a
+   15-digit ОГРНИП never forces the page into a horizontal scroll on a phone. */
+.legal-dl {
+  margin: 0 0 var(--sp-3);
+  border-top: 1px solid var(--line);
+}
+.legal-dl > div {
+  display: grid;
+  gap: 0 var(--sp-3);
+  padding: var(--sp-1) 0;
+  border-bottom: 1px solid var(--line);
+}
+@media (min-width: 34rem) {
+  .legal-dl > div { grid-template-columns: minmax(10rem, 32%) 1fr; }
+}
+.legal-dl dt { color: var(--ink); font-weight: 600; }
+.legal-dl dd { margin: 0; }
+
+/* Genuinely tabular content: the legal bases, the retention periods and the
+   response deadlines. Three columns will not fit a 320px viewport, so the
+   table keeps its shape and the wrapper scrolls instead of the document.
+   tabindex makes that scroll reachable without a pointer. */
+.legal-page__table-scroll {
+  margin: 0 0 var(--sp-3);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.legal-table {
+  width: 100%;
+  min-width: 26rem;
+  border-collapse: collapse;
+  font-size: var(--fs-small);
+  text-align: left;
+}
+.legal-table th,
+.legal-table td {
+  padding: var(--sp-1) var(--sp-2);
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.legal-table th:first-child,
+.legal-table td:first-child { padding-left: 0; }
+.legal-table th:last-child,
+.legal-table td:last-child { padding-right: 0; }
+.legal-table tbody th { color: var(--ink); font-weight: 600; }
+.legal-table thead th {
+  border-bottom-color: var(--line-strong);
+  font-size: var(--fs-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+}
+.legal-table tbody tr:last-child th,
+.legal-table tbody tr:last-child td { border-bottom-color: var(--line-strong); }
+
+.legal-page__updated {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-small);
+  color: var(--ink-faint);
+}
 
 .legal-page__back { margin-top: var(--sp-5); }
 
